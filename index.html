@@ -44,7 +44,7 @@
     document.getElementById("btnBuscar").addEventListener("click", async () => {
         if (document.getElementById('txtID').value <= 0 || document.getElementById('txtID').value >= 201) {
             console.log("Numero Invalido");
-            window.alert("MENSAJE DE QUE NO ES UN NUMERO VALIDO");
+            window.alert("Este Id no es valido");
         }
         else {
             if (await X() == true) {
