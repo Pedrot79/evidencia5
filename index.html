@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    </head>
+    <body>
+        <div style="width: 40%; margin-left: 30px; margin-top: 25px;">
+            <h4>Evidencia 4</h4>
+            <div class="form-group">
+                <label for="txtID">ID:</label>
+                <input type="number" name="txtID" id="txtID" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="txtTitulo">TITLE</label>
+                <input type="text" name="txtTitulo" id="txtTitulo" class="form-control">
+                <label for="txtCompletado">COMPLETED</label>
+                <input type="text" name="txtCompletado" id="txtCompletado" class="form-control">
+            </div>
+            <button id="btnBuscar" class="btn btn-primary">BUSCAR</button>
+            <button id="btnLimpiar" class="btn btn-primary">LIMPIAR</button>
+        </div>
+        <div style="margin-top: 10px; margin-left: 30px; width: 80%;">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">NAME</th>
+                        <th scope="col">EMAIL</th>
+                        <th scope="col">PHONE</th>
+                        <th scope="col">WEBSITE</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla">
+
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>
+<script>
+    document.getElementById("btnBuscar").addEventListener("click", async () => {
+        if (document.getElementById('txtID').value <= 0 || document.getElementById('txtID').value >= 201) {
+            console.log("Numero Invalido");
+            window.alert("MENSAJE DE QUE NO ES UN NUMERO VALIDO");
+        }
+        else {
+            if (await X() == true) {
+                document.getElementById("btnBuscar").style.display = "none";
+                document.getElementById("btnLimpiar").style.display = "inline-block";
+                console.log("Terminó con éxito.");
+            }
+        }
+
+    });
+
+    document.getElementById("btnLimpiar").addEventListener("click", () => {
+        document.getElementById("btnBuscar").style.display = "inline-block";
+        document.getElementById("btnLimpiar").style.display = "none";
+        document.getElementById("txtTitulo").value = "";
+        document.getElementById("txtCompletado").value = "";
+        document.getElementById("eliminar").remove();
+
+    });
+
+    const vardatos = (datos) => {
+        let txtID5 = document.getElementById("txtID").value;
+        for (const vardatos2 of datos) {
+            if (vardatos3 == vardatos2.id) {
+                document.getElementById('txtTitulo').value = vardatos2.title;
+                document.getElementById('txtCompletado').value = vardatos2.completed;
+            }
+        }
+    }
+
+    const vardatos4 = (datos) => {
+        let vardatos5 = document.getElementById("txtID").value;
+        let vardatos6 = document.getElementById("tabla")
+        for (const vardatos7 of datos) {
+            if (vardatos5 == vardatos7.id) {
+                let row = `<tr id="eliminar">
+                                <td>${vardatos7.name}</td>
+                                <td>${vardatos7.email}</td>
+                                <td>${vardatos7.phone}</td>
+                                <td>${vardatos7.website}</td>
+                            </tr>`
+                vardatos6.innerHTML += row;
+            }
+        }
+    }
+
+    const X = async () => {
+
+        try {
+            const url = "https://jsonplaceholder.typicode.com/todos";
+
+            const res = await fetch(url)
+                .then(res => res.json())
+                .then(datos => vardatos(datos))
+                .catch(error => {
+                    console.log("Hubo un error: " + error.message);
+                })
+        }
+        catch (error) {
+            console.log("error");
+            return false;
+        }
+
+        try {
+            const url2 = "https://jsonplaceholder.typicode.com/users";
+
+            const res = await fetch(url2)
+                .then(res => res.json())
+                .then(datos => vardatos4(datos))
+                .catch(error => {
+                    console.log("Hubo un error: " + error.message);
+                })
+        }
+        catch (error) {
+            console.log("Hubo un error: " + error.message);
+            return false;
+        }
+        return true;
+
+    }
+</script>
